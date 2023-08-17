@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Editor</title>
+</head>
+<body>
+    <h1>Code Editor</h1>
+
+    <div>
+        <label for="language">Wähle eine Programmiersprache:</label>
+        <select id="language" onchange="selectLanguage()">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">JavaScript</option>
+        </select>
+    </div>
+
+    <div>
+        <h2>Code Editor</h2>
+        <textarea id="code" rows="10" cols="50"></textarea>
+    </div>
+
+    <button onclick="updatePreview()">Update Preview</button>
+
+    <div>
+        <h2>Live Ansicht</h2>
+        <iframe id="preview" width="100%" height="300"></iframe>
+    </div>
+
+    <script>
+        function selectLanguage() {
+            var selectedLanguage = document.getElementById('language').value;
+            var placeholderText = '';
+            
+            if (selectedLanguage === 'html') {
+                placeholderText = '<!DOCTYPE html>\n<html>\n<head>\n<title>Meine Webseite</title>\n</head>\n<body>\n\n</body>\n</html>';
+            } else if (selectedLanguage === 'css') {
+                placeholderText = 'body {\n    background-color: lightgray;\n}';
+            } else if (selectedLanguage === 'javascript') {
+                placeholderText = 'document.body.innerHTML = "Hallo, Welt!";';
+            }
+            
+            document.getElementById('code').placeholder = placeholderText;
+            document.getElementById('code').value = '';
+        }
+        
+        function updatePreview() {
+            var code = document.getElementById('code').value;
+            var previewFrame = document.getElementById('preview');
+            var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+            
+            preview.open();
+            preview.write(code);
+            preview.close();
+        }
+    </script>
+</body>
+</html>
